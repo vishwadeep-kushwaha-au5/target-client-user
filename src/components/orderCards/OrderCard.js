@@ -32,7 +32,7 @@ const OrderCard = (props) => {
     useEffect(()=>{
         let driverId = props.order?.deliveryPartnerId
         if(driverId){
-            axios.post('http://139.59.92.252/api/driver/getDriverCurrentLocation', {'driverId': driverId}).then(res=>{
+            axios.post('https://server.gotarget.in/api/driver/getDriverCurrentLocation', {'driverId': driverId}).then(res=>{
                 let locations = res.data?.result
                 if(locations.length){
                     Geocode.fromLatLng(locations[0].lat, locations[0].lng).then(
