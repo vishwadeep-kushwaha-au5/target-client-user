@@ -39,7 +39,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "npm run build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -61,5 +61,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:3080"
+  "proxy": "http://139.59.92.252"
 }
