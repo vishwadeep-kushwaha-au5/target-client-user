@@ -1,9 +1,20 @@
 import React, { useEffect, useState } from "react";
-import {Card, CardContent, Typography, Grid} from '@material-ui/core'
+import {Card, CardContent, Typography, Grid, Button, makeStyles} from '@material-ui/core'
 import moment from 'moment'
 import Geocode from 'react-geocode'
 import ProgressTimeline from '../misc/progressTimeline'
 import axios from "axios";
+
+const useStyles = makeStyles((theme)=>({
+    trackButton: {
+        padding: 0,
+        '& a':{
+            padding: '20px',
+            textDecoration: 'none',
+            color: theme.palette.common.textTertiary
+        }
+    }
+}))
 
 Geocode.setApiKey("AIzaSyBv6DEf2K26lxoAURZHe98bzwEnTLKJs0U");
 Geocode.setLanguage("en");
@@ -25,6 +36,8 @@ const orderStatuSwtich = (orderStatus) =>{
 }
 
 const OrderCard = (props) => {
+    const classes = useStyles()
+
     const [driverLocation, setDriverLocation] = useState({})
     const [driverAddress, setDriverAddress] = useState(null)
     const orderStatus = '4'
@@ -95,6 +108,14 @@ const OrderCard = (props) => {
                     </Grid>
                     <Grid item xs={12}>
                         <Typography variant="subtitle1">updated @{moment(driverLocation.date).format('LLLL')}</Typography>
+                    </Grid>
+                </Grid>
+                <Grid container direction="row-reverse">
+                    <Grid item>
+                        {(driverLocation?.lat&& driverLocation?.lng &&props.order?.destinationAddress?.lat && props.order?.destinationAddress?.lng)?
+                        <Button variant="outlined" className={classes.trackButton}>
+                            <a target="_blank" href={`https://www.google.com/maps/dir/${driverLocation.lat},${driverLocation.lng}/${props.order.destinationAddress.lat},${props.order.destinationAddress.lng}`}>Track order</a>
+                        </Button>:"Error"}
                     </Grid>
                 </Grid>
             </CardContent>
