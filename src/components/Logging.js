@@ -8,9 +8,17 @@ import { makeStyles } from '@material-ui/core/styles'
 import { validateFields } from '../utils/validator'
 import { login, register, updateLoginField } from '../redux/actions/auth'
 import Wrapper from './misc/PageWrapper'
-
+import Logo from '../images/logo_full_transparent.png'
 
 const useStyles = makeStyles((theme) => ({
+    loginFormWrapper:{
+        display: 'flex',
+        alignItems: 'center',
+        height: '100%'
+    },
+    loginButtonWrapper:{
+        margin: '25px 0px'
+    },
     togglePage: {
         textAlign: "center",
         paddingTop: '20px',
@@ -19,7 +27,6 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export const Logging = () => {
-
     const classes = useStyles();
     const history = useHistory();
     const [loginRegister, setLoginRegister] = useState(0); //0 means login page show and 1 means register page show
@@ -152,25 +159,32 @@ const Login = (props) => {
     }
 
     return (
-        <Grid container justifyContent="center">
-            <Grid item xs={12}>
-                <TextField
-                    name='phoneNumber'
-                    label="Phone Number"
-                    variant="outlined"
-                    value={loginState.phoneNumber.value}
-                    onChange={handleInputChange}
-                    fullWidth
-                    {...(loginState.phoneNumber.validation && { error: true, helperText: loginState.phoneNumber.validation })}
-                />
-            </Grid>
-            <Grid item>
-                <Button color="primary" variant="contained" onClick={handleLogin}>Track order</Button>
-            </Grid>
+        <div className={classes.loginFormWrapper}>
+            <Grid container justifyContent="center">
+                <Grid item>
+                    <img src={Logo}/>
+                </Grid>
+                <Grid container item xs={12} justifyContent="center">
+                    <Grid item xs={10}>
+                        <TextField
+                            name='phoneNumber'
+                            label="Phone Number"
+                            variant="outlined"
+                            value={loginState.phoneNumber.value}
+                            onChange={handleInputChange}
+                            fullWidth
+                            {...(loginState.phoneNumber.validation && { error: true, helperText: loginState.phoneNumber.validation })}
+                            />
+                    </Grid>
+                </Grid>
+                <Grid item className={classes.loginButtonWrapper}>
+                    <Button color="primary" variant="contained" onClick={handleLogin}>Track order</Button>
+                </Grid>
 
-            {/* <Grid item xs={12}>
-                <Box color="text.secondary" className={classes.togglePage} variant="contained" onClick={props.toggle}>New here? Get an account</Box>
-            </Grid> */}
-        </Grid>
+                {/* <Grid item xs={12}>
+                    <Box color="text.secondary" className={classes.togglePage} variant="contained" onClick={props.toggle}>New here? Get an account</Box>
+                </Grid> */}
+            </Grid>
+        </div>
     )
 } 

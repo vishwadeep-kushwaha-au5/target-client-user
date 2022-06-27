@@ -107,7 +107,7 @@ export default function MiniDrawer({children}) {
     <div className={classes.root}>
       <CssBaseline />
       <NavBar open={open} handleDrawerOpen={handleDrawerOpen}/>
-      {/* <AppBar
+      <AppBar
         position="fixed"
         className={clsx(classes.appBar, {
           [classes.appBarShift]: open,
@@ -127,7 +127,7 @@ export default function MiniDrawer({children}) {
           </IconButton>
           <NavBar/>
         </Toolbar>
-      </AppBar> */}
+      </AppBar>
       {/* <Drawer
         variant="permanent"
         className={clsx(classes.drawer, {

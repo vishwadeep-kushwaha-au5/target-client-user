@@ -13,6 +13,10 @@ const useStyles = makeStyles((theme)=>({
             textDecoration: 'none',
             color: theme.palette.common.textTertiary
         }
+    },
+    orderStatusText: {
+        fontSize: '15px',
+        color: '#03c04a',
     }
 }))
 
@@ -44,14 +48,17 @@ const OrderCard = (props) => {
 
     useEffect(()=>{
         let driverId = props.order?.deliveryPartnerId
+        let locations = []
         if(driverId){
             axios.post('https://server.gotarget.in/api/driver/getDriverCurrentLocation', {'driverId': driverId}).then(res=>{
-                let locations = res.data?.result
+                locations = res.data?.result
+                console.log(locations)
                 if(locations.length){
+                    setDriverLocation(locations[0])
                     Geocode.fromLatLng(locations[0].lat, locations[0].lng).then(
                     (response) => {
+                        console.log(response)
                         const address = response.results[0].formatted_address;
-                        setDriverLocation(locations[0])
                         setDriverAddress(address)
                     },
                     (error) => {
@@ -95,16 +102,16 @@ const OrderCard = (props) => {
                 <Grid item xs={12}><br/><br/></Grid>
                 <Grid container>
                     <Grid item xs={4}>
-                        <Typography variant="h6">Status:</Typography>
+                        <Typography variant="h5">Status:</Typography>
                     </Grid>
                     <Grid item xs={8}>
-                        <Typography variant="subtitle2">{orderStatuSwtich(orderStatus)}</Typography>
+                        <Typography variant="h6" className={classes.orderStatusText}>{orderStatuSwtich(orderStatus)}</Typography>
                     </Grid>
                     <Grid item xs={12}>
                         <ProgressTimeline orderStatus={orderStatus}/>
                     </Grid>
                     <Grid item xs={12}>
-                        <small>Vehicle is at <Typography variant="subtitle2">{driverAddress}</Typography></small>
+                        <small>Your is at <Typography variant="subtitle2" component="span">{driverAddress}</Typography></small>
                     </Grid>
                     <Grid item xs={12}>
                         <Typography variant="subtitle1">updated @{moment(driverLocation.date).format('LLLL')}</Typography>
@@ -114,7 +121,7 @@ const OrderCard = (props) => {
                     <Grid item>
                         {(driverLocation?.lat&& driverLocation?.lng &&props.order?.destinationAddress?.lat && props.order?.destinationAddress?.lng)?
                         <Button variant="outlined" className={classes.trackButton}>
-                            <a target="_blank" href={`https://www.google.com/maps/dir/${driverLocation.lat},${driverLocation.lng}/${props.order.destinationAddress.lat},${props.order.destinationAddress.lng}`}>Track order</a>
+                            <a target="_blank" rel="noopener noreferrer" href={`https://www.google.com/maps/dir/${driverLocation.lat},${driverLocation.lng}/${props.order.destinationAddress.lat},${props.order.destinationAddress.lng}`}>Track order</a>
                         </Button>:"Error"}
                     </Grid>
                 </Grid>

@@ -15,6 +15,7 @@ const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
     grow: {
+        flexGrow:1
     },
     appBar: {
         zIndex: theme.zIndex.drawer + 1,
@@ -69,13 +70,13 @@ const NavBar = (props) => {
 
 
     return (
-        <div className={classes.grow}>
+        <div>
             <AppBar 
                 position="fixed"
                 className={clsx(classes.appBar, {
                 [classes.appBarShift]: props.open,
                 })}>
-                <Toolbar>
+                <Toolbar className={classes.grow}>
                     <IconButton color="inherit"
                         aria-label="open drawer"
                         onClick={props.handleDrawerOpen}
