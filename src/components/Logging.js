@@ -161,8 +161,8 @@ const Login = (props) => {
     return (
         <div className={classes.loginFormWrapper}>
             <Grid container justifyContent="center">
-                <Grid item>
-                    <img src={Logo}/>
+                <Grid item xs={12}>
+                    <img style={{width:"100%"}} src={Logo}/>
                 </Grid>
                 <Grid container item xs={12} justifyContent="center">
                     <Grid item xs={10}>
